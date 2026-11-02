@@ -1,10 +1,10 @@
 # Glen Hutajulu portfolio
 
-Portfolio site plus Voltwise, an interactive dashboard demo with dummy data.
+A static portfolio site built with Astro. It ships no JavaScript, and every project reads the same way: images and a written case study. The Voltwise demo lives in its own repo, `voltwise-demo`.
 
-- `src/pages`: Astro pages. The homepage, `/services`, `/demo` and case studies.
+- `src/pages`: the homepage, `/services` and case studies.
 - `src/content/work`: case studies as Markdown. Frontmatter feeds the TL;DR block.
-- `src/demo`: the Voltwise React app. All data is generated in `data.ts` from a fixed seed.
+- `src/data.ts`: contact links and the demo URL. The demo link appears once `demo` is set.
 - `public/cv.pdf`: add this file and every Download CV link appears on the next build.
 
 ## Run it
@@ -17,7 +17,3 @@ npm run dev
 ## Deploy
 
 Netlify builds from `netlify.toml`: `npm run build`, publish `dist`.
-
-## Rule for the demo
-
-Everything under `src/demo` stays fictional: no real product, client, region or number.

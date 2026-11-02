@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import { site } from '../../data';
 
 export async function getStaticPaths() {
   const work = await getCollection('work');
@@ -26,7 +27,7 @@ const d = entry.data;
         {d.team && <div><dt>Team</dt><dd>{d.team}</dd></div>}
         <div><dt>Timeline</dt><dd>{d.timeline}</dd></div>
       </dl>
-      {d.demo && <a class="button" href="/demo">Open the interactive demo</a>}
+      {d.demo && site.demo && <p class="demo"><a href={site.demo}>Open the demo with dummy data</a></p>}
     </section>
 
     {d.cover && (
@@ -60,7 +61,7 @@ const d = entry.data;
   .tldr dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 40px; }
   .tldr .wide { grid-column: span 3; max-width: 70ch; }
   .tldr dt { font-size: 14px; color: var(--soft); }
-  .tldr .button { margin-top: 20px; }
+  .demo { margin-top: 18px; font-weight: 600; }
   .cover { margin-top: 28px; border-radius: 10px; overflow: hidden; background: var(--line); }
   .cover img { width: 100%; }
   .prose { max-width: 66ch; margin: 44px auto 0; }
