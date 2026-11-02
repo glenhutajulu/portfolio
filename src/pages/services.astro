@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data';
+
+const steps = [
+  ['Consulting', 'I ask about your goals, design preferences and target audience. This is the foundation of our work together.'],
+  ['Discovery', 'I study your closest competitors and industry leaders to find a fitting visual style and tone of voice.'],
+  ['Structure', 'You get a draft of your future website, straight from the Figma file.'],
+  ['Polishing', 'I add high-fidelity visuals and interactive elements so the site looks and feels finished.'],
+  ['Review', 'You review and give feedback, and I iterate until the design meets your needs.'],
+  ['Delivery', 'I build the site and hand it over, so you can keep it up to date yourself.'],
+];
+---
+<Base title="Website design services, Glen Hutajulu" description="How I design and build company websites for clients, from first conversation to delivery.">
+  <section class="services">
+    <h1>Websites for companies, designed and built end to end.</h1>
+    <p>Alongside product work, I design and build websites for clients in Indonesia and the US.</p>
+    <ol>
+      {steps.map(([name, text]) => (
+        <li><h2>{name}</h2><p>{text}</p></li>
+      ))}
+    </ol>
+    <a class="button" href={`mailto:${site.email}`}>Email me about a website</a>
+  </section>
+</Base>
+
+<style>
+  .services { padding-block: clamp(28px, 6vw, 72px) 0; }
+  h1 { font-size: clamp(38px, 6vw, 76px); line-height: 1; letter-spacing: -0.035em; font-weight: 800; max-width: 18ch; }
+  .services > p { margin-top: 16px; color: var(--soft); max-width: 46ch; }
+  ol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; margin: 40px 0 32px; padding: 0; list-style: none; counter-reset: step; border-top: 1px solid var(--ink); }
+  li { counter-increment: step; display: grid; grid-template-columns: 2.2em minmax(0, 1fr); padding-block: 16px; border-bottom: 1px solid var(--line); }
+  li::before { content: counter(step); color: var(--soft); }
+  li h2 { font-size: 22px; letter-spacing: -0.015em; }
+  li p { grid-column: 2; color: var(--soft); margin-top: 4px; }
+  @media (max-width: 760px) { ol { grid-template-columns: minmax(0, 1fr); } }
+</style>

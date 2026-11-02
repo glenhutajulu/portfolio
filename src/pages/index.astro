@@ -1,0 +1,141 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import HeroPreview from '../demo/HeroPreview';
+import { site } from '../data';
+
+const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+const selected = work.filter((w) => w.data.group === 'selected');
+const more = work.filter((w) => w.data.group === 'more');
+---
+<Base
+  title="Glen Hutajulu, Product Designer"
+  description="Product Designer for AI-powered, data-heavy products, across telco, banking and consumer finance. Based in Jakarta, working remotely (GMT+7)."
+>
+  <section class="hero">
+    <h1>Product Designer for <span>AI-powered,</span> <span>data-heavy</span> products.</h1>
+    <div class="hero-side">
+      <p>I turn complex enterprise data into tools people can act on: LLM-powered analytics for around 60,000 telco sites, loan journeys for FIFGROUP, corporate banking for PermataBank. Based in Jakarta, working remotely (GMT+7).</p>
+      <ul class="cta">
+        <li><a class="button" href="#work">View work</a></li>
+        {site.cv && <li><a href={site.cv} download>Download CV</a></li>}
+        <li><a href={site.linkedin}>LinkedIn</a></li>
+        <li><a href={`mailto:${site.email}`}>Email</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="live" aria-labelledby="live-title">
+    <header>
+      <h2 id="live-title">Click a card. The map answers.</h2>
+      <p>A working piece of a dashboard I designed, rebuilt in code with dummy data. <a href="/demo">Open the full demo</a></p>
+    </header>
+    <HeroPreview client:only="react">
+      <div slot="fallback" class="live-fallback">Loading the live demo</div>
+    </HeroPreview>
+  </section>
+
+  <section id="work" class="work" aria-labelledby="work-title">
+    <h2 id="work-title">Selected work</h2>
+    {selected.map((item) => {
+      const href = item.data.hasPage ? `/work/${item.id}` : null;
+      return (
+        <article class:list={['entry', { 'entry-text': !item.data.cover }]}>
+          <div class="entry-copy">
+            <h3>{href ? <a href={href}>{item.data.title}</a> : item.data.title}</h3>
+            <p>{item.data.tagline}</p>
+            <dl>
+              <div><dt>Role</dt><dd>{item.data.role}</dd></div>
+              <div><dt>When</dt><dd>{item.data.timeline}</dd></div>
+              <div><dt>Result</dt><dd>{item.data.outcome}</dd></div>
+            </dl>
+            {href ? <a class="entry-link" href={href}>Read the case study</a> : <p class="entry-note">Full case study coming soon.</p>}
+          </div>
+          {item.data.cover && (
+            <a class="entry-image" href={href} tabindex="-1" aria-hidden="true">
+              <img src={item.data.cover} alt="" width={item.data.coverWidth} height={item.data.coverHeight} loading="lazy" decoding="async" />
+            </a>
+          )}
+        </article>
+      );
+    })}
+  </section>
+
+  <section class="rows" aria-labelledby="more-title">
+    <h2 id="more-title">More work</h2>
+    <ul>
+      {more.map((item) => (
+        <li>
+          <a href={`/work/${item.id}`}>{item.data.title}</a>
+          <span>{item.data.tagline}</span>
+          <span>{item.data.timeline}</span>
+        </li>
+      ))}
+      <li>
+        <span>Bintang Manunggal Pratama</span>
+        <span>Corporate website for a maritime logistics company, delivered in one month.</span>
+        <span>2024</span>
+      </li>
+      <li>
+        <span>ShilohCore</span>
+        <span>Company website for a US mechanical design studio, designed and built in Framer.</span>
+        <span>2025</span>
+      </li>
+    </ul>
+    <p>Need a website rather than a product designer? <a href="/services">See how I work with clients</a>.</p>
+  </section>
+
+  <section id="about" class="about" aria-labelledby="about-title">
+    <h2 id="about-title">About</h2>
+    <div>
+      <p>I have spent 3+ years designing enterprise products across telco, banking and consumer finance. Most recently I was the sole designer on an LLM-powered analytics platform. Before that I worked at Aleph, a Singapore-HQ creative technology agency, on products for FIFGROUP, PermataBank and Telkomsel.</p>
+      <p>I own the work end to end: research, flows, high-fidelity UI, usability testing and handoff. Claude is part of my daily workflow for documentation, ideation and faster iteration. This site is one result: I designed and built it with Claude, including the demo above.</p>
+      <p>Outside design, I co-own a record store in South Jakarta, where I handle operations and finance.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { padding-block: clamp(28px, 6vw, 72px) 36px; }
+  .hero h1 { font-size: clamp(40px, 6.1vw, 88px); line-height: 1; letter-spacing: -0.04em; font-weight: 800; max-width: 18em; }
+  .hero h1 span { white-space: nowrap; }
+  .hero-side { display: grid; grid-template-columns: minmax(0, 62ch) auto; justify-content: space-between; align-items: end; gap: 20px 48px; margin-top: 24px; }
+  .hero-side p { color: var(--soft); }
+  .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin: 0; padding: 0; list-style: none; }
+  .live header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px 24px; flex-wrap: wrap; margin-bottom: 12px; }
+  .live h2 { font-size: 22px; letter-spacing: -0.015em; }
+  .live header p { font-size: 16px; color: var(--soft); }
+  .live-fallback { display: grid; place-items: center; min-height: 460px; border-radius: 16px; background: #18181b; color: #a1a1aa; }
+  .work { margin-top: clamp(64px, 10vw, 128px); }
+  .work > h2, .rows > h2, .about > h2 { font-size: clamp(30px, 4.6vw, 54px); }
+  .entry { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 24px 48px; padding-block: 36px; border-bottom: 1px solid var(--line); }
+  .work > h2 + .entry { margin-top: 12px; border-top: 1px solid var(--ink); }
+  .entry-text { grid-template-columns: minmax(0, 1fr); }
+  .entry-text dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 32px; }
+  .entry h3 { font-size: clamp(26px, 3vw, 36px); }
+  .entry h3 a { text-decoration: none; }
+  .entry h3 a:hover { text-decoration: underline; }
+  .entry-copy > p { color: var(--soft); margin-top: 8px; max-width: 46ch; }
+  .entry dl { display: grid; gap: 10px; margin-top: 20px; font-size: 16px; }
+  .entry dt { color: var(--soft); font-size: 14px; }
+  .entry-link { display: inline-block; margin-top: 18px; font-weight: 600; }
+  .entry .entry-note { margin-top: 18px; font-size: 16px; }
+  .entry-image { display: block; align-self: start; overflow: hidden; border-radius: 10px; background: var(--line); }
+  .entry-image img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: top left; }
+  .rows { margin-top: clamp(56px, 8vw, 96px); }
+  .rows ul { margin: 16px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--ink); }
+  .rows li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) 170px; gap: 2px 32px; padding-block: 14px; border-bottom: 1px solid var(--line); font-size: 17px; }
+  .rows li > :first-child { font-weight: 600; }
+  .rows li > :nth-child(2) { color: var(--soft); }
+  .rows li > :last-child { text-align: right; color: var(--soft); }
+  .rows > p { margin-top: 18px; font-size: 16px; color: var(--soft); }
+  .about { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 16px 48px; margin-top: clamp(56px, 8vw, 96px); }
+  .about div { display: grid; gap: 14px; max-width: 62ch; }
+  @media (max-width: 900px) {
+    .hero-side, .entry, .about { grid-template-columns: minmax(0, 1fr); }
+    .entry-image { order: -1; }
+    .entry-text dl { grid-template-columns: minmax(0, 1fr); }
+    .rows li { grid-template-columns: minmax(0, 1fr); }
+    .rows li > :last-child { text-align: left; }
+  }
+</style>

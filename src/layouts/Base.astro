@@ -1,0 +1,56 @@
+---
+import '../styles/global.css';
+import { site } from '../data';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+}
+
+const { title, description, image = '/og.png' } = Astro.props;
+const year = new Date().getFullYear();
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#edeff1" />
+  </head>
+  <body>
+    <a class="skip" href="#content">Skip to content</a>
+    <div class="page">
+      <header class="bar">
+        <a href="/"><strong>{site.name}</strong></a>
+        <nav aria-label="Main">
+          <a href="/#work">Work</a>
+          <a href="/demo">Demo</a>
+          <a href="/services">Services</a>
+          <a href="/#about">About</a>
+        </nav>
+      </header>
+      <main id="content"><slot /></main>
+      <footer class="foot">
+        <h2>Hiring a product designer? Let's talk.</h2>
+        <ul>
+          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+          <li><a href={site.linkedin}>LinkedIn</a></li>
+          <li><a href={site.dribbble}>Dribbble</a></li>
+          {site.cv && <li><a href={site.cv} download>Download CV</a></li>}
+        </ul>
+        <small>© {year} Glen Hutajulu. Based in Jakarta, working remotely (GMT+7).</small>
+      </footer>
+    </div>
+  </body>
+</html>
