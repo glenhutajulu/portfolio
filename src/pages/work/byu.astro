@@ -1,0 +1,131 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+<Base
+  title="byU complaint journey, Glen Hutajulu"
+  description="UX research on how customers report a problem in a digital telco app."
+  caseStudy
+>
+  <div class="wrap">
+
+    <header class="case-head">
+      <h1 class="h-large">byU complaint journey</h1>
+      <p class="lede lede-wide mt-28">UX research on how customers report a problem in a digital telco app.</p>
+    </header>
+
+    <figure class="cover">
+      <img class="img" src="/work/byu/cover.webp" alt="Three phones showing the byU app home, help centre and topic screens" width="2400" height="1280" decoding="async" fetchpriority="high">
+    </figure>
+
+    <section class="mt-24" aria-label="Project summary">
+      <dl class="grid grid-260 summary">
+        <div class="card-grey grain"><dt class="label">Problem</dt><dd class="small mt-10">Customers reporting a weak signal went through too many questions before reaching a solution or an agent.</dd></div>
+        <div class="card-grey grain"><dt class="label">Role</dt><dd class="small mt-10">UX Researcher and Designer (Intern)</dd></div>
+        <div class="card-grey grain"><dt class="label">Outcome</dt><dd class="small mt-10">Four high-priority recommendations. I do not know whether they were released.</dd></div>
+        <div class="card-grey grain"><dt class="label">Timeline</dt><dd class="small mt-10">Dec 2022 – Feb 2023</dd></div>
+      </dl>
+    </section>
+
+    <div class="prose">
+      <p>byU is Indonesia's first digital provider and a subsidiary of Telkomsel. It needed a better journey for customers submitting a complaint, and I worked on that as a UX Researcher.</p>
+
+      <h2 class="h-section mt-72">walking the journey first</h2>
+      <p>I started with a UX audit, going through the weak signal complaint journey myself to understand what users actually have to do.</p>
+      <p class="mt-14">I then ran usability tests and interviews with 5 people who met the byU user criteria. The journey split into three steps: awareness, exploration and complaint. The first two were relatively smooth, so I focused on the complaint step.</p>
+    </div>
+  </div>
+
+  <section class="band mt-lg" aria-label="Key insights">
+    <div class="inner">
+      <h2 class="h-section h-section-roomy">what participants told me</h2>
+      <div class="grid grid-260">
+        <div class="card grain">
+          <p class="label">Insight 01</p>
+          <p class="mt-14">It takes too many questions to get to an agent.</p>
+        </div>
+        <div class="card grain">
+          <p class="label">Insight 02</p>
+          <p class="mt-14">Some needed guidance to reach the speed test feature.</p>
+        </div>
+        <div class="card grain">
+          <p class="label">Insight 03</p>
+          <p class="mt-14">Some did not get the solution they expected. They wanted something quicker and simpler.</p>
+        </div>
+        <div class="card grain">
+          <p class="label">Insight 04</p>
+          <p class="mt-14">Some felt the data collected earlier was useless once an agent took over.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+
+    <div class="prose">
+      <h2 class="h-section">how might we provide a quicker solution?</h2>
+
+      <p class="label mt-40">Recommendation 01 / Priority high / Effort low</p>
+      <h3 class="h-sub mt-10">show the default solution first</h3>
+      <p>This step is already in the agent SOP and in the Jaringan help articles. Product team data showed 95% of weak signal complaints were solved by these steps, so people should see them from the start. The bot can give the default solution straight away and spare them the rest of the journey.</p>
+    </div>
+
+    <figure class="fig-960 mt-sm">
+      <img class="img" src="/work/byu/default-solution.webp" alt="byU chat where the bot replies to a weak signal report with seven troubleshooting steps" width="2000" height="1339" decoding="async" loading="lazy">
+      <figcaption class="label mt-10">The default solution appears as the bot's first answer</figcaption>
+    </figure>
+
+    <div class="prose">
+      <p class="label">Recommendation 02 / Priority high / Effort low</p>
+      <h3 class="h-sub mt-10">reassess the 10 questions</h3>
+      <p>Some of the questions matter less, because the answer can come from back-end data or is simply unnecessary. The 10 questions can come down to the 7 that matter most for this step.</p>
+    </div>
+
+    <figure class="mt-sm">
+      <img class="img" src="/work/byu/questions.webp" alt="Side by side comparison of the original 10 bot questions and the reduced set of 7" width="2000" height="1072" decoding="async" loading="lazy">
+      <figcaption class="label mt-10">From 10 questions to 7</figcaption>
+    </figure>
+
+    <div class="prose">
+      <p class="label">Recommendation 03 / Priority high / Effort high</p>
+      <h3 class="h-sub mt-10">check the signal directly</h3>
+      <p>For comparison, I made the same weak signal report in the MyXL app. Three things worked differently:</p>
+      <ul class="bullets mt-14">
+        <li>It refreshes the network connection directly for the number that asked for help, which is quicker.</li>
+        <li class="mt-6">A step confirms when the process is complete, so people understand the progress of their complaint.</li>
+        <li class="mt-6">People only fill in a form if the earlier steps did not solve the problem.</li>
+      </ul>
+      <p class="mt-14">In the improved byU flow, the bot checks the APN setting and guides a network refresh, an officer can refresh the connection for the confirmed number, and the questions only come up if the problem is still there.</p>
+    </div>
+
+    <div class="grid grid-320 mt-sm">
+      <figure class="cell">
+        <img class="img" src="/work/byu/bot-refresh.webp" alt="Two phones showing the bot checking the APN setting, guiding a network refresh and connecting to an officer" width="2000" height="1339" decoding="async" loading="lazy">
+        <figcaption class="label mt-10">The bot guides a refresh first</figcaption>
+      </figure>
+      <figure class="cell">
+        <img class="img" src="/work/byu/officer-refresh.webp" alt="Two phones showing an officer confirming the number and refreshing the connection, followed by the questions if the problem remains" width="2000" height="1339" decoding="async" loading="lazy">
+        <figcaption class="label mt-10">Questions only if the problem remains</figcaption>
+      </figure>
+    </div>
+
+    <div class="prose">
+      <h2 class="h-section">how might we provide clear guidance on the speed test?</h2>
+
+      <p class="label mt-40">Recommendation 04 / Priority high / Effort low</p>
+      <h3 class="h-sub mt-10">add a shortcut from the chat</h3>
+      <p>The speed test was already built into the app, but users did not know about it or where to find it. I added an entry point inside the chat that takes people straight to the speed test page.</p>
+    </div>
+
+    <figure class="fig-1120 mt-sm">
+      <img class="img" src="/work/byu/speed-test.webp" alt="Before and after of the speed test question, with a new link to the speed test inside the chat message" width="2000" height="1128" decoding="async" loading="lazy">
+      <figcaption class="label mt-10">The question now links to the speed test. Personal details are hidden.</figcaption>
+    </figure>
+
+    <div class="prose">
+      <h2 class="h-section">where it stands</h2>
+      <p>This was research and recommendations from my internship. I do not know whether they were released, so I have no results to show.</p>
+      <p class="mt-40"><a href="/#work">Back to all work</a></p>
+    </div>
+
+  </div>
+</Base>

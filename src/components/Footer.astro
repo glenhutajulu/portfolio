@@ -1,0 +1,22 @@
+---
+import { site } from '../data';
+---
+<div class="wrap">
+  <footer class="foot">
+    <h2 class="h-foot">let's work together</h2>
+    <div class="foot-links">
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+      <div class="foot-social">
+        <a href={site.linkedin}>linkedin ↗</a>
+        <a href={site.dribbble}>dribbble ↗</a>
+        {site.cv && <a href={site.cv} download>cv ↗</a>}
+      </div>
+    </div>
+    <div class="foot-meta label">
+      <span>Jakarta, <span class="m-clock"></span>GMT+7</span>
+      <span>Open to remote roles</span>
+      <span>2026 Glen Hutajulu</span>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </footer>
+</div>
