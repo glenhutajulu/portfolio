@@ -1,15 +1,25 @@
 ---
+import '@fontsource-variable/geist/wght.css';
+import '@fontsource-variable/geist-mono/wght.css';
+import '@fontsource-variable/newsreader/opsz.css';
 import '../styles/global.css';
-import { site } from '../data';
+import geist from '@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url';
+import newsreader from '@fontsource-variable/newsreader/files/newsreader-latin-opsz-normal.woff2?url';
+import motion from '../scripts/motion.js?raw';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 
 interface Props {
   title: string;
   description: string;
   image?: string;
+  /** Case studies use the larger reading size. */
+  caseStudy?: boolean;
+  /** Home puts the header space inside its hero, so the portrait runs behind the nav. */
+  heroHeader?: boolean;
 }
 
-const { title, description, image = '/og.png' } = Astro.props;
-const year = new Date().getFullYear();
+const { title, description, image = '/og.png', caseStudy = false, heroHeader = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 <!doctype html>
@@ -21,35 +31,23 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href={geist} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={newsreader} as="font" type="font/woff2" crossorigin />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:image" content={new URL(image, Astro.site)} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="theme-color" content="#edeff1" />
+    <meta name="theme-color" content="#FAFAFA" />
   </head>
   <body>
     <a class="skip" href="#content">Skip to content</a>
-    <div class="page">
-      <header class="bar">
-        <a href="/"><strong>{site.name}</strong></a>
-        <nav aria-label="Main">
-          <a href="/#work">Work</a>
-          <a href="/services">Services</a>
-          <a href="/#about">About</a>
-        </nav>
-      </header>
+    <div id="top" class:list={['grain', { case: caseStudy }]}>
+      <Header />
+      {!heroHeader && <div class="m-slot"></div>}
       <main id="content"><slot /></main>
-      <footer class="foot">
-        <h2>Hiring a product designer? Let's talk.</h2>
-        <ul>
-          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
-          <li><a href={site.linkedin}>LinkedIn</a></li>
-          <li><a href={site.dribbble}>Dribbble</a></li>
-          {site.cv && <li><a href={site.cv} download>Download CV</a></li>}
-        </ul>
-        <small>© {year} Glen Hutajulu. Based in Jakarta, working remotely (GMT+7).</small>
-      </footer>
+      <Footer />
     </div>
+    <script is:inline set:html={motion}></script>
   </body>
 </html>

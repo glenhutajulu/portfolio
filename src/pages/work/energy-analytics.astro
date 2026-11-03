@@ -1,0 +1,198 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../data';
+---
+<Base
+  title="Arsenal, Glen Hutajulu"
+  description="An LLM-powered analytics platform for around 60,000 telco tower sites."
+  caseStudy
+>
+  <div class="wrap">
+
+    <article>
+      <header class="case-head">
+        <h1 class="h-giant">arsenal</h1>
+        <div class="case-lede">
+          <p class="lede lede-flex">An LLM-powered analytics platform for around 60,000 telco tower sites.</p>
+          {site.demo && <a class="btn-pill" href={site.demo} target="_blank" rel="noopener">see the demo ↗</a>}
+        </div>
+      </header>
+
+      <figure class="cover">
+        <img class="img" src="/work/arsenal/cover.webp" alt="Voltwise dashboard showing KPI cards, a ranked region list and a site map with anomalies highlighted" width="2560" height="1600" decoding="async" fetchpriority="high">
+      </figure>
+
+      <section class="mt-24" aria-label="Project summary">
+        <dl class="grid grid-260 summary">
+          <div class="card-grey grain"><dt class="label">Problem</dt><dd class="small mt-10">HQ and 12 regional teams had to dig through spreadsheets to understand electricity use and billing across around 60,000 tower sites.</dd></div>
+          <div class="card-grey grain"><dt class="label">Role and team</dt><dd class="small mt-10">Sole designer, from concept to pre-launch, with front-end and back-end engineers, 2 data scientists, a data engineer, QA and a PM.</dd></div>
+          <div class="card-grey grain"><dt class="label">Outcome</dt><dd class="small mt-10">Pre-launch. The HQ team has confirmed the design works. There are no usage metrics yet.</dd></div>
+          <div class="card-grey grain"><dt class="label">Timeline</dt><dd class="small mt-10">Oct 2025 – Oct 2026</dd></div>
+        </dl>
+      </section>
+
+      <div class="prose">
+        <p>Arsenal forecasts electricity consumption and billing for Telkomsel's Network team. Its users are an HQ team of 10+ people and 12 regional PICs. I was the only designer on the product and worked with the team from the first concept through to pre-launch.</p>
+        <p class="mt-14">The screens on this page are from Voltwise, a working rebuild in code with a fictional brand and generated data. No real client data appears here.</p>
+
+        <h2 class="h-section mt-72">turning a data problem into a reading problem</h2>
+        <p>The underlying processing is complex: forecasts, metered usage, billing records and license records all meet at site level. Users do not need that complexity. They need to know which sites deserve attention and why. So the work was mostly about simplifying very complex data into visuals people can read quickly.</p>
+
+        <h2 class="h-section mt-72">kpi cards that double as filters</h2>
+        <p>This is the signature pattern of the product. The KPI cards at the top of a view are also its main filter. Selecting one recolours the map, re-ranks the regions, rewrites the summary and narrows the table. A user reads a number and then acts on that same number, with no separate filter panel to learn.</p>
+
+        <h2 class="h-section mt-72">one anatomy for every use case</h2>
+        <p>Energy anomalies, license validation and invoice monitoring are different problems with the same shape: a population of sites split into states, where someone has to find the ones that need action. I used one structure for all of them: status mix, filter cards, ranked regions, map, explanation, table.</p>
+        <p class="mt-14">Two of those views track license adherence per site and upcoming bill due dates. They were built to cut avoidable utility costs and late payments.</p>
+      </div>
+
+      <figure class="mt-lg">
+        <img class="img" src="/work/arsenal/licenses.webp" alt="Licenses view using the same cards, ranked regions, map and table as the anomalies view" width="2560" height="1600" decoding="async" loading="lazy">
+        <figcaption class="label mt-10">The license view reuses the anatomy of the anomaly view, so there is one thing to learn</figcaption>
+      </figure>
+
+      <div class="prose">
+        <h2 class="h-section">a number needs its denominator</h2>
+        <p>I considered leading the KPI row with absolute counts and rejected it. A raw count with no total in view sends the reader off to find the denominator before they can tell whether the number is good or bad.</p>
+        <p class="mt-14">So I set one rule that any future KPI can follow. A rate answers how well something is going, so it headlines as a percentage, with the count as a caption. A volume answers how much work is waiting, so it headlines as a count.</p>
+        <p class="mt-14">Units got the same care. On one screen, M meant billions on a network total and millions on a single site, so one site looked bigger than the whole network. I spelled the units out, and rounded percentages to whole numbers on summary pages. Decimals belong on the detail page.</p>
+
+        <h2 class="h-section mt-72">eight versions of one summary page</h2>
+        <p>I designed an executive summary one level above the detailed settlement page. It took eight versions, and these four turns shaped it. The panels are recreations with fictional data.</p>
+      </div>
+
+      <section class="band band-pull mt-lg" aria-label="How the summary page changed">
+        <div>
+          <div class="turn-head">
+            <p class="label">Turn 01</p>
+            <h3 class="h-turn">a list posing as a chart</h3>
+            <p class="turn-note">One number and one chart replaced the list.</p>
+          </div>
+          <div class="grid grid-320">
+            <figure class="cell">
+              <img class="img rounded" src="/work/arsenal/turn-1-before.webp" alt="A list of counts and percentages under a thin bar" width="1320" height="784" decoding="async" loading="lazy">
+              <figcaption class="label mt-10">Before</figcaption>
+            </figure>
+            <figure class="cell">
+              <img class="img rounded" src="/work/arsenal/turn-1-after.webp" alt="One large percentage beside a funnel that narrows at each stage" width="1320" height="784" decoding="async" loading="lazy">
+              <figcaption class="label mt-10">After</figcaption>
+            </figure>
+          </div>
+        </div>
+        <div class="mt-turn">
+          <div class="turn-head">
+            <p class="label">Turn 02</p>
+            <h3 class="h-turn">tabs that hid the answer</h3>
+            <p class="turn-note">One list keeps all three metrics in view.</p>
+          </div>
+          <div class="grid grid-320">
+            <figure class="cell">
+              <img class="img rounded" src="/work/arsenal/turn-2-before.webp" alt="Three tabs, showing one metric per region at a time" width="1320" height="784" decoding="async" loading="lazy">
+              <figcaption class="label mt-10">Before</figcaption>
+            </figure>
+            <figure class="cell">
+              <img class="img rounded" src="/work/arsenal/turn-2-after.webp" alt="One table with completion, anomalies and tickets for each region" width="1320" height="784" decoding="async" loading="lazy">
+              <figcaption class="label mt-10">After</figcaption>
+            </figure>
+          </div>
+        </div>
+        <div class="mt-turn">
+          <div class="turn-head">
+            <p class="label">Turn 03</p>
+            <h3 class="h-turn">two cards, two stories</h3>
+            <p class="turn-note">One list, with National as the first row.</p>
+          </div>
+          <div class="grid grid-320">
+            <figure class="cell">
+              <img class="img rounded" src="/work/arsenal/turn-3-before.webp" alt="A regional ticket table beside a separate national donut" width="1320" height="784" decoding="async" loading="lazy">
+              <figcaption class="label mt-10">Before</figcaption>
+            </figure>
+            <figure class="cell">
+              <img class="img rounded" src="/work/arsenal/turn-3-after.webp" alt="One progress list with National first and a ring on every row" width="1320" height="784" decoding="async" loading="lazy">
+              <figcaption class="label mt-10">After</figcaption>
+            </figure>
+          </div>
+        </div>
+        <div class="mt-turn">
+          <div class="turn-head">
+            <p class="label">Turn 04</p>
+            <h3 class="h-turn">management rewrote my rule</h3>
+            <p class="turn-note">They wanted plain counts per region, so I followed them and kept the worst regions on top.</p>
+          </div>
+          <div class="grid grid-320">
+            <figure class="cell">
+              <img class="img rounded" src="/work/arsenal/turn-4-before.webp" alt="A large validity donut" width="1320" height="784" decoding="async" loading="lazy">
+              <figcaption class="label mt-10">Before</figcaption>
+            </figure>
+            <figure class="cell">
+              <img class="img rounded" src="/work/arsenal/turn-4-after.webp" alt="A count, then regions listed worst first with a bar and plain numbers" width="1320" height="784" decoding="async" loading="lazy">
+              <figcaption class="label mt-10">After</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <div class="prose">
+        <h2 class="h-section">two ticket models on one page</h2>
+        <p>Arsenal has to start work that happens somewhere else. Findings turn into tickets on one Alert &amp; Ticketing page, with a tab per use case and status cards that filter the table. Behind the tabs, the two ticket types work differently, because the work does.</p>
+
+        <h3 class="h-sub mt-40">power usage: one site, one ticket</h3>
+        <p>HQ creates tickets where the problem is found: from the anomaly contributor list for a whole area, or from one site's analysis page. A confirmation shows how many tickets will go out, because sent tickets cannot be cancelled. Sites that do not qualify are skipped automatically.</p>
+        <p class="mt-14">Tickets go straight to the field team's own system, so Arsenal monitors the work rather than rebuilding it. A stepper shows where each ticket is, the activity log holds the visit report and photos, and the next month's data decides the result. A ticket closes only when the site is back to normal, and the reason is recorded. After two visits without a fix it parks, and only HQ can reopen it, with a reason. Regional users follow their own region's tickets but cannot create any.</p>
+        <p class="label flow-note mt-14 grain">In progress → Evaluate → Closed or Parked</p>
+      </div>
+
+      <figure class="mt-md">
+        <img class="img" src="/work/arsenal/tickets-power.webp" alt="Voltwise power usage tickets with status cards, a ticket table and a panel showing the stage and activity of one ticket" width="2560" height="1600" decoding="async" loading="lazy">
+        <figcaption class="label mt-10">Status cards filter the table. The panel shows the stage and activity of one ticket.</figcaption>
+      </figure>
+
+      <div class="prose">
+
+        <h3 class="h-sub">license settlement: one region, one anomaly, one day</h3>
+        <p>Here the system creates tickets automatically, and one ticket can hold many links. Each covers one region, one anomaly type and one day, shows progress by link, and closes itself when every link is done.</p>
+        <p class="mt-14">This work stays inside Arsenal and crosses teams. Each anomaly goes to the team that owns it. One team sets the root cause and corrects the data, and HQ approves the change. Another fixes the issue outside Arsenal and marks it resolved. So a ticket row expands into its links, and links can be selected and handled in bulk.</p>
+        <p class="label flow-note mt-14 grain">Open → In progress → Closed</p>
+      </div>
+
+      <figure class="mt-md">
+        <img class="img" src="/work/arsenal/tickets-license.webp" alt="Voltwise license tickets with one ticket expanded into its links, three links selected and a bulk action bar" width="2560" height="1698" decoding="async" loading="lazy">
+        <figcaption class="label mt-10">A ticket expands into its links, and several links can be handled at once</figcaption>
+      </figure>
+
+      <div class="prose">
+
+        <h3 class="h-sub">designing around the integration</h3>
+        <p>I designed power usage ticketing twice. Plan A sends tickets to the field system through an API. Plan B runs inside Arsenal, with Telegram for field updates, and keeps a point where it could later move to the API without changing the experience. Plan A became the version ready for development.</p>
+
+        <h2 class="h-section mt-72">from kilowatt-hours to hours of backup</h2>
+        <p>Power Backup Optimization finds sites short of backup power and recommends a fix. It first measured this as a coverage percentage, which was too vague. I replaced it with backup autonomy: how many hours a site can run at peak load, against one fixed target.</p>
+        <p class="mt-14">Hours now come first and kilowatt-hours second. The number also splits into battery and genset, because each has a different fix. A nearby donor site can share battery capacity, but a genset shortfall needs its own capacity action. When a donor only closes part of the gap, the recommendation shows an interim step and a permanent one.</p>
+        <p class="mt-14">Healthy sites stay quiet: no recommendation, no work order button, and a dash for revenue at risk instead of zero. On the map, each status has its own colour and shape, so it does not rely on colour alone, and clusters keep their dominant status instead of all turning red.</p>
+      </div>
+
+      <div class="prose">
+        <h2 class="h-section">an ai layer that sits inside the work</h2>
+        <p>The LLM does three jobs: natural-language query, AI-generated summaries and anomaly explanations. Users can ask a question from any page without leaving the data in front of them, and answers come back as structured site results rather than a wall of text. Summaries and explanations appear where the decision happens, so nobody has to go to a separate AI page to get value from it.</p>
+      </div>
+
+      <div class="grid grid-320 mt-lg">
+        <figure class="cell">
+          <img class="img" src="/work/arsenal/assistant.webp" alt="Assistant panel answering a plain-language question beside the filtered dashboard" width="2560" height="1600" decoding="async" loading="lazy">
+          <figcaption class="label mt-10">A plain-language question filters the dashboard behind the panel</figcaption>
+        </figure>
+        <figure class="cell">
+          <img class="img" src="/work/arsenal/site-detail.webp" alt="Site detail panel with an AI explanation, a forecast chart and license and bill facts" width="2560" height="1600" decoding="async" loading="lazy">
+          <figcaption class="label mt-10">Site detail leads with the explanation, then the evidence</figcaption>
+        </figure>
+      </div>
+
+      <div class="prose">
+        <h2 class="h-section">where it stands</h2>
+        <p>The product is pre-launch, so I do not have adoption numbers to show. What I can say is that the HQ team has reviewed the design and confirmed it works for them.</p>
+        <p class="mt-40"><a href="/#work">Back to all work</a></p>
+      </div>
+    </article>
+
+  </div>
+</Base>

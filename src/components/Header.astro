@@ -1,0 +1,16 @@
+---
+import { site } from '../data';
+
+const isHome = Astro.url.pathname === '/';
+---
+<div class="m-hd">
+  <header class="bar">
+    <a class="bar-name" href="/">{site.name}</a>
+    <nav class="bar-nav" aria-label="Main">
+      <a class="m-nav" href={isHome ? '#work' : '/#work'}>Work</a>
+      <a class="m-nav" href="/services">Services</a>
+      <a class="m-nav" href="/about">About</a>
+      <a class="btn btn-sm btn-dark" href={`mailto:${site.email}`}>Email me<span class="m-ar"><span>↗</span><span aria-hidden="true">↗</span></span></a>
+    </nav>
+  </header>
+</div>

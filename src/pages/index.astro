@@ -1,126 +1,151 @@
 ---
-import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import { site } from '../data';
-
-const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
-const selected = work.filter((w) => w.data.group === 'selected');
-const more = work.filter((w) => w.data.group === 'more');
 ---
 <Base
   title="Glen Hutajulu, Product Designer"
   description="Product Designer for AI-powered, data-heavy products, across telco, banking and consumer finance. Based in Jakarta, working remotely (GMT+7)."
+  heroHeader
 >
-  <section class="hero">
-    <h1>Product Designer for <span>AI-powered,</span> <span>data-heavy</span> products.</h1>
-    <div class="hero-side">
-      <p>I turn complex enterprise data into tools people can act on: LLM-powered analytics for around 60,000 telco sites, loan journeys for FIFGROUP, corporate banking for PermataBank. Based in Jakarta, working remotely (GMT+7).</p>
-      <ul class="cta">
-        <li><a class="button" href="#work">View work</a></li>
-        {site.cv && <li><a href={site.cv} download>Download CV</a></li>}
-        <li><a href={site.linkedin}>LinkedIn</a></li>
-        <li><a href={`mailto:${site.email}`}>Email</a></li>
-      </ul>
-    </div>
-  </section>
+  <span class="m-pill" aria-hidden="true">Case study ↗</span>
+  <div class="hero">
+    <img class="hero-bg" src="/img/hero-bg.webp" alt="" width="2560" height="1440" decoding="async" fetchpriority="high">
+    <div class="hero-inner">
 
-  <section id="work" class="work" aria-labelledby="work-title">
-    <h2 id="work-title">Selected work</h2>
-    {selected.map((item) => {
-      const href = item.data.hasPage ? `/work/${item.id}` : null;
-      return (
-        <article class:list={['entry', { 'entry-text': !item.data.cover }]}>
-          <div class="entry-copy">
-            <h3>{href ? <a href={href}>{item.data.title}</a> : item.data.title}</h3>
-            <p>{item.data.tagline}</p>
-            <dl>
-              <div><dt>Role</dt><dd>{item.data.role}</dd></div>
-              <div><dt>When</dt><dd>{item.data.timeline}</dd></div>
-              <div><dt>Result</dt><dd>{item.data.outcome}</dd></div>
-            </dl>
-            {href ? <a class="entry-link" href={href}>Read the case study</a> : <p class="entry-note">Full case study coming soon.</p>}
+      <div class="m-slot"></div>
+
+      <section class="hero-main">
+        <span class="dot" aria-hidden="true" style="left: 4.5%; top: 5%; background: #328DE0"></span>
+        <span class="dot" aria-hidden="true" style="left: 61%; top: 7%; background: #FFE68A"></span>
+        <span class="dot" aria-hidden="true" style="left: 97%; top: 5%; background: #B3D6DE"></span>
+        <span class="dot" aria-hidden="true" style="left: 67%; top: 44%; background: #FEA0CB"></span>
+        <span class="dot" aria-hidden="true" style="left: 95%; top: 38%; background: #C69BEE"></span>
+        <span class="dot" aria-hidden="true" style="left: 58%; top: 62%; background: #93CE4E"></span>
+        <span class="dot" aria-hidden="true" style="left: 46%; top: 92%; background: #F0873B"></span>
+
+        <div class="rel">
+          <p class="hero-title">glen hutajulu</p><h1 class="hero-title">product designer</h1>
+          <div class="chips">
+            <span class="chip">AI/LLM UX</span>
+            <span class="chip">Dashboards</span>
+            <span class="chip">Fintech</span>
+            <span class="chip">Telco</span>
+            <span class="chip">Research</span>
           </div>
-          {item.data.cover && (
-            <a class="entry-image" href={href} tabindex="-1" aria-hidden="true">
-              <img src={item.data.cover} alt="" width={item.data.coverWidth} height={item.data.coverHeight} loading="lazy" decoding="async" />
-            </a>
-          )}
-        </article>
-      );
-    })}
-  </section>
+        </div>
 
-  <section class="rows" aria-labelledby="more-title">
-    <h2 id="more-title">More work</h2>
-    <ul>
-      {more.map((item) => (
-        <li>
-          <a href={`/work/${item.id}`}>{item.data.title}</a>
-          <span>{item.data.tagline}</span>
-          <span>{item.data.timeline}</span>
-        </li>
-      ))}
-      <li>
-        <span>Bintang Manunggal Pratama</span>
-        <span>Corporate website for a maritime logistics company, delivered in one month.</span>
-        <span>2024</span>
-      </li>
-      <li>
-        <span>ShilohCore</span>
-        <span>Company website for a US mechanical design studio, designed and built in Framer.</span>
-        <span>2025</span>
-      </li>
-    </ul>
-    <p>Need a website rather than a product designer? <a href="/services">See how I work with clients</a>.</p>
-  </section>
-
-  <section id="about" class="about" aria-labelledby="about-title">
-    <h2 id="about-title">About</h2>
-    <div>
-      <p>I have spent 3+ years designing enterprise products across telco, banking and consumer finance. Most recently I was the sole designer on an LLM-powered analytics platform. Before that I worked at Aleph, a Singapore-HQ creative technology agency, on products for FIFGROUP, PermataBank and Telkomsel.</p>
-      <p>I own the work end to end: research, flows, high-fidelity UI, usability testing and handoff. Claude is part of my daily workflow for documentation, ideation and faster iteration. This site is one result: I designed and built it with Claude.</p>
-      <p>Outside design, I co-own a record store in South Jakarta, where I handle operations and finance.</p>
+        <div class="hero-foot">
+          <div class="hero-tag">
+            <p class="hero-lede">for AI-powered, data-heavy products. I turn complex enterprise data into tools people can act on.</p>
+            <p class="label label-lg mt-14">Based in Jakarta, working remotely (GMT+7)</p>
+          </div>
+          <div class="hero-side">
+            <img class="crop crop-center ratio-16-10 hero-portrait" src="/img/hero-portrait.webp" alt="Portrait of Glen Hutajulu" width="1200" height="750" decoding="async">
+            <div class="hero-cta">
+              <a class="btn btn-dark" href="#work">View work<span class="m-ar"><span>↗</span><span aria-hidden="true">↗</span></span></a>
+              {site.cv && <a class="btn btn-light" href={site.cv} download>Download CV</a>}
+              <a class="btn btn-light" href="https://www.linkedin.com/in/glenhutajulu/">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
-  </section>
-</Base>
+  </div>
 
-<style>
-  .hero { padding-block: clamp(28px, 6vw, 72px) 36px; }
-  .hero h1 { font-size: clamp(40px, 6.1vw, 88px); line-height: 1; letter-spacing: -0.04em; font-weight: 800; max-width: 18em; }
-  .hero h1 span { white-space: nowrap; }
-  .hero-side { display: grid; grid-template-columns: minmax(0, 62ch) auto; justify-content: space-between; align-items: end; gap: 20px 48px; margin-top: 24px; }
-  .hero-side p { color: var(--soft); }
-  .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin: 0; padding: 0; list-style: none; }
-  .work { margin-top: clamp(40px, 6vw, 72px); }
-  .work > h2, .rows > h2, .about > h2 { font-size: clamp(30px, 4.6vw, 54px); }
-  .entry { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 24px 48px; padding-block: 36px; border-bottom: 1px solid var(--line); }
-  .work > h2 + .entry { margin-top: 12px; border-top: 1px solid var(--ink); }
-  .entry-text { grid-template-columns: minmax(0, 1fr); }
-  .entry-text dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 32px; }
-  .entry h3 { font-size: clamp(26px, 3vw, 36px); }
-  .entry h3 a { text-decoration: none; }
-  .entry h3 a:hover { text-decoration: underline; }
-  .entry-copy > p { color: var(--soft); margin-top: 8px; max-width: 46ch; }
-  .entry dl { display: grid; gap: 10px; margin-top: 20px; font-size: 16px; }
-  .entry dt { color: var(--soft); font-size: 14px; }
-  .entry-link { display: inline-block; margin-top: 18px; font-weight: 600; }
-  .entry .entry-note { margin-top: 18px; font-size: 16px; }
-  .entry-image { display: block; align-self: start; overflow: hidden; border-radius: 10px; background: var(--line); }
-  .entry-image img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: top left; }
-  .rows { margin-top: clamp(56px, 8vw, 96px); }
-  .rows ul { margin: 16px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--ink); }
-  .rows li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) 170px; gap: 2px 32px; padding-block: 14px; border-bottom: 1px solid var(--line); font-size: 17px; }
-  .rows li > :first-child { font-weight: 600; }
-  .rows li > :nth-child(2) { color: var(--soft); }
-  .rows li > :last-child { text-align: right; color: var(--soft); }
-  .rows > p { margin-top: 18px; font-size: 16px; color: var(--soft); }
-  .about { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 16px 48px; margin-top: clamp(56px, 8vw, 96px); }
-  .about div { display: grid; gap: 14px; max-width: 62ch; }
-  @media (max-width: 900px) {
-    .hero-side, .entry, .about { grid-template-columns: minmax(0, 1fr); }
-    .entry-image { order: -1; }
-    .entry-text dl { grid-template-columns: minmax(0, 1fr); }
-    .rows li { grid-template-columns: minmax(0, 1fr); }
-    .rows li > :last-child { text-align: left; }
-  }
-</style>
+  <div class="wrap">
+
+    <section class="work-top" id="work">
+      <h2 class="h-display">selected works</h2>
+
+      <div class="work-grid">
+
+        <article class="cell">
+          <a class="tile" href="/work/energy-analytics">
+            <img class="crop crop-tl ratio-4-3" src="/work/arsenal/cover.webp" alt="Voltwise dashboard with KPI cards and a site map" width="2560" height="1600" decoding="async" loading="lazy">
+          </a>
+          <div class="tile-meta">
+            <h3 class="tile-title"><a href="/work/energy-analytics">arsenal</a></h3>
+            <span class="label">AI analytics, telco, Oct 2025 – Oct 2026</span>
+          </div>
+          <p class="tile-blurb">Sole designer on an LLM-powered analytics platform for around 60,000 telco tower sites, from concept to pre-launch.</p>
+        </article>
+
+        <article class="cell">
+          <a class="tile" href="/work/fifgo">
+            <img class="crop crop-center ratio-4-3" src="/work/fifgo/cover.webp" alt="FIFGO app on a phone beside the FIFGROUP website on a laptop" width="2400" height="1600" decoding="async" loading="lazy">
+          </a>
+          <div class="tile-meta">
+            <h3 class="tile-title"><a href="/work/fifgo">fifgo and fifgroup</a></h3>
+            <span class="label">Consumer finance, Sep 2023 – Feb 2024</span>
+          </div>
+          <p class="tile-blurb">A customer app and public website revamp. In UAT, users completed the loan flow in under 7 minutes with zero drop-off.</p>
+        </article>
+
+        <article class="cell">
+          <a class="tile" href="/work/orbit">
+            <img class="crop crop-center ratio-4-3" src="/work/orbit/tile.webp" alt="Telkomsel Orbit website on a laptop beside two phones" width="1600" height="1200" decoding="async" loading="lazy">
+          </a>
+          <div class="tile-meta">
+            <h3 class="tile-title"><a href="/work/orbit">telkomsel orbit</a></h3>
+            <span class="label">Telco, Mar 2024 – Nov 2024</span>
+          </div>
+          <p class="tile-blurb">A website revamp for a fixed wireless internet service, simplifying navigation and the login, purchase and modem pairing flows.</p>
+        </article>
+
+        <article class="cell">
+          <a class="tile" href="/work/byu">
+            <img class="crop crop-center ratio-4-3" src="/work/byu/tile.webp" alt="Three phones showing the byU app home, help centre and topic screens" width="1600" height="1200" decoding="async" loading="lazy">
+          </a>
+          <div class="tile-meta">
+            <h3 class="tile-title"><a href="/work/byu">byU complaint journey</a></h3>
+            <span class="label">Telco research, Dec 2022 – Feb 2023</span>
+          </div>
+          <p class="tile-blurb">UX research that recommended showing the default fix first and cutting the bot flow from 10 questions to 7.</p>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="more-top">
+      <div class="more">
+        <h2 class="h-display h-display-flush">more work</h2>
+        <div class="more-list">
+          <a class="row" href="https://groupbintang.com/" target="_blank" rel="noopener">
+            <span class="row-title">bintang manunggal pratama</span>
+            <span class="label row-meta">Corporate website, 2024<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="1.5" stroke-linecap="square" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"></path></svg></span>
+        </a>
+        <a class="row" href="https://shilohcore.framer.ai/" target="_blank" rel="noopener">
+          <span class="row-title">shilohcore</span>
+          <span class="label row-meta">Company website, 2025<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" stroke-width="1.5" stroke-linecap="square" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"></path></svg></span>
+      </a>
+      <p class="soft mt-18">Need a website rather than a product designer? <a href="/services">See how I work with clients</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band band-pull band-roomy mt-xxl grain">
+  <h2 class="h-display">how i work</h2>
+  <div class="grid grid-280">
+    <div class="card card-stack grain">
+      <p class="label">Step 01</p>
+      <h3 class="h-step mt-12">understand</h3>
+      <p class="soft mt-14 mb-20">Stakeholder interviews, user interviews and journey mapping, turned into user stories and information architecture.</p>
+      <img class="crop crop-center ratio-3-2 mt-auto" src="/img/step-understand.webp" alt="Illustration of a user speaking beside a journey map, interview notes and a sticky note" width="1440" height="960" decoding="async" loading="lazy">
+    </div>
+    <div class="card card-stack grain">
+      <p class="label">Step 02</p>
+      <h3 class="h-step mt-12">design</h3>
+      <p class="soft mt-14 mb-20">Flows, high-fidelity UI and prototypes, with design rationale presented directly to stakeholders.</p>
+      <img class="crop crop-center ratio-3-2 mt-auto" src="/img/step-design.webp" alt="Illustration of one screen going from wireframe to grey layout to final UI" width="1440" height="960" decoding="async" loading="lazy">
+    </div>
+    <div class="card card-stack grain">
+      <p class="label">Step 03</p>
+      <h3 class="h-step mt-12">validate</h3>
+      <p class="soft mt-14 mb-20">Usability testing, then handoff to engineers, data scientists and QA.</p>
+      <img class="crop crop-center ratio-3-2 mt-auto" src="/img/step-validate.webp" alt="Illustration of a phone being tapped between a checklist and a code panel" width="1440" height="960" decoding="async" loading="lazy">
+    </div>
+  </div>
+</section>
+
+</div>
+</Base>
