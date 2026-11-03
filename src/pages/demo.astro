@@ -1,9 +1,0 @@
----
-import Blank from '../layouts/Blank.astro';
-import App from '../demo/App';
----
-<Blank title="Voltwise demo" description="Interactive demo of a fictional energy analytics dashboard, built with dummy data by Glen Hutajulu.">
-  <App client:only="react">
-    <p slot="fallback" style="color:#a1a1aa;font-family:system-ui;padding:24px">Loading the Voltwise demo. It needs JavaScript to run.</p>
-  </App>
-</Blank>

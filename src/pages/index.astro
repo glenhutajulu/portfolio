@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import HeroPreview from '../demo/HeroPreview';
 import { site } from '../data';
 
 const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
@@ -23,16 +22,6 @@ const more = work.filter((w) => w.data.group === 'more');
         <li><a href={`mailto:${site.email}`}>Email</a></li>
       </ul>
     </div>
-  </section>
-
-  <section class="live" aria-labelledby="live-title">
-    <header>
-      <h2 id="live-title">Click a card. The map answers.</h2>
-      <p>A working piece of a dashboard I designed, rebuilt in code with dummy data. <a href="/demo">Open the full demo</a></p>
-    </header>
-    <HeroPreview client:only="react">
-      <div slot="fallback" class="live-fallback">Loading the live demo</div>
-    </HeroPreview>
   </section>
 
   <section id="work" class="work" aria-labelledby="work-title">
@@ -89,7 +78,7 @@ const more = work.filter((w) => w.data.group === 'more');
     <h2 id="about-title">About</h2>
     <div>
       <p>I have spent 3+ years designing enterprise products across telco, banking and consumer finance. Most recently I was the sole designer on an LLM-powered analytics platform. Before that I worked at Aleph, a Singapore-HQ creative technology agency, on products for FIFGROUP, PermataBank and Telkomsel.</p>
-      <p>I own the work end to end: research, flows, high-fidelity UI, usability testing and handoff. Claude is part of my daily workflow for documentation, ideation and faster iteration. This site is one result: I designed and built it with Claude, including the demo above.</p>
+      <p>I own the work end to end: research, flows, high-fidelity UI, usability testing and handoff. Claude is part of my daily workflow for documentation, ideation and faster iteration. This site is one result: I designed and built it with Claude.</p>
       <p>Outside design, I co-own a record store in South Jakarta, where I handle operations and finance.</p>
     </div>
   </section>
@@ -102,11 +91,7 @@ const more = work.filter((w) => w.data.group === 'more');
   .hero-side { display: grid; grid-template-columns: minmax(0, 62ch) auto; justify-content: space-between; align-items: end; gap: 20px 48px; margin-top: 24px; }
   .hero-side p { color: var(--soft); }
   .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin: 0; padding: 0; list-style: none; }
-  .live header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px 24px; flex-wrap: wrap; margin-bottom: 12px; }
-  .live h2 { font-size: 22px; letter-spacing: -0.015em; }
-  .live header p { font-size: 16px; color: var(--soft); }
-  .live-fallback { display: grid; place-items: center; min-height: 460px; border-radius: 16px; background: #18181b; color: #a1a1aa; }
-  .work { margin-top: clamp(64px, 10vw, 128px); }
+  .work { margin-top: clamp(40px, 6vw, 72px); }
   .work > h2, .rows > h2, .about > h2 { font-size: clamp(30px, 4.6vw, 54px); }
   .entry { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 24px 48px; padding-block: 36px; border-bottom: 1px solid var(--line); }
   .work > h2 + .entry { margin-top: 12px; border-top: 1px solid var(--ink); }
