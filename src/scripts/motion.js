@@ -70,6 +70,35 @@
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
 
+  // Hero colour squares drift with the cursor, each at its own depth, and settle back when it leaves.
+  const dotHero = root.querySelector('.hero');
+  const dots = dotHero ? [...dotHero.querySelectorAll('.dot')] : [];
+  if (dots.length && window.matchMedia('(hover: hover)').matches) {
+    const depth = [0.9, 0.5, 0.7, 1, 0.6, 0.8, 0.45];
+    let tx = 0, ty = 0, cx = 0, cy = 0, last = 0, raf = 0;
+    const drift = (now) => {
+      const k = 1 - Math.exp(-5 * Math.min((now - last) / 1000, 0.05));
+      last = now;
+      cx += (tx - cx) * k;
+      cy += (ty - cy) * k;
+      dots.forEach((dot, i) => {
+        const d = depth[i % depth.length];
+        dot.style.translate = (cx * d).toFixed(2) + 'px ' + (cy * d).toFixed(2) + 'px';
+      });
+      raf = Math.abs(tx - cx) + Math.abs(ty - cy) > 0.05 ? requestAnimationFrame(drift) : 0;
+    };
+    const aim = (x, y) => {
+      tx = x;
+      ty = y;
+      if (!raf) { last = performance.now(); raf = requestAnimationFrame(drift); }
+    };
+    dotHero.addEventListener('pointermove', (e) => {
+      const r = dotHero.getBoundingClientRect();
+      aim(((e.clientX - r.left) / r.width - 0.5) * 96, ((e.clientY - r.top) / r.height - 0.5) * 64);
+    });
+    dotHero.addEventListener('pointerleave', () => aim(0, 0));
+  }
+
   // Smooth wheel scrolling, matched to the reference (Lenis, about 0.11 per frame at 60fps).
   // Touch, keyboard and scrollbar stay native. A page with no room to scroll is left alone.
   const scroller = document.scrollingElement;
