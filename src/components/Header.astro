@@ -1,16 +1,27 @@
 ---
 import { site } from '../data';
 
-const isHome = Astro.url.pathname === '/';
+interface Props {
+  /** Home links to its own #work section; other pages link back to it. */
+  home?: boolean;
+}
+
+const { home = false } = Astro.props;
+const work = home ? '#work' : '/#work';
 ---
-<div class="m-hd">
-  <header class="bar">
-    <a class="bar-name" href="/">{site.name}</a>
-    <nav class="bar-nav" aria-label="Main">
-      <a class="m-nav" href={isHome ? '#work' : '/#work'}>Work</a>
-      <a class="m-nav" href="/services">Services</a>
-      <a class="m-nav" href="/about">About</a>
-      <a class="btn btn-sm btn-dark" href={`mailto:${site.email}`}>Email me<span class="m-ar"><span>↗</span><span aria-hidden="true">↗</span></span></a>
-    </nav>
-  </header>
-</div>
+{!home && <div class="prog" aria-hidden="true"></div>}
+
+<header class="bar">
+<a class="mark mono" href="/"><span class="sq"></span>{site.name}</a>
+<button class="burger" type="button" aria-expanded="false" aria-controls="menu"><span class="mono">Menu</span><i aria-hidden="true"></i></button>
+</header>
+<nav id="menu" class="menu" aria-label="Main">
+<ol>
+<li><a href={work}><span class="mono">01</span><span class="px-font d">work</span></a></li>
+<li><a href="/services"><span class="mono">02</span><span class="px-font d">services</span></a></li>
+<li><a href="/about"><span class="mono">03</span><span class="px-font d">about</span></a></li>
+<li><a href={`mailto:${site.email}`}><span class="mono">04</span><span class="px-font d">contact</span></a></li>
+</ol>
+<div class="menu-sub mono"><a href={site.linkedin}>LinkedIn ↗</a><a href={site.dribbble}>Dribbble ↗</a>{site.cv && <a href={site.cv} target="_blank" rel="noopener">CV ↗</a>}</div>
+<p class="menu-foot mono">Jakarta, GMT+7 · Open to remote roles</p>
+</nav>
