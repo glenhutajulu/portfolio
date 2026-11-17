@@ -43,14 +43,33 @@
   const stack = R.querySelector('.stk'), counter = R.querySelector('.stk-n');
   const cards = all('.wk-card'), stories = all('.wk-story');
   const cover = R.querySelector('.cs-cover-in');
-  let pin = false;
+  // Screen height for the pinned layouts. On phones it is the small viewport (browser bars
+  // shown) and only changes with the width, so the page does not jump when Safari's bars
+  // hide and return during a scroll.
+  const probe = D.createElement('div');
+  probe.style.cssText = 'position:fixed;top:0;left:0;width:0;height:100vh;height:100svh;visibility:hidden;pointer-events:none';
+  D.body.appendChild(probe);
+  let vh = 0, vw = 0;
+  const measure = () => {
+    if (fine || W.innerWidth !== vw || !vh) {
+      vw = W.innerWidth;
+      vh = Math.min(W.innerHeight, probe.offsetHeight || W.innerHeight);
+    }
+  };
+  let pin = false, fade = false;
   const setMode = () => {
-    pin = !reduce && W.innerWidth >= 760 && W.innerHeight <= 1400;
+    measure();
+    // Phones get the same scroll story as desktop; very short screens (a phone on its
+    // side) and very tall frames stay static.
+    pin = !reduce && vh >= 500 && vh <= 1400;
     R.classList.toggle('pin', pin);
-    R.style.setProperty('--vh', W.innerHeight + 'px');
+    // Home only: one section per screen and section colours.
+    fade = !!hero && !reduce && vh <= 1400;
+    R.classList.toggle('fold', fade);
+    R.style.setProperty('--vh', vh + 'px');
   };
   const progress = (el) => {
-    const r = el.getBoundingClientRect(), len = r.height - W.innerHeight;
+    const r = el.getBoundingClientRect(), len = r.height - vh;
     return len > 0 ? Math.min(1, Math.max(0, -r.top / len)) : 0;
   };
   let shown = -1;
@@ -80,7 +99,7 @@
       d.style.transform = 'translate(' + (x * (sc - 1)).toFixed(1) + 'px,' + (y * (sc - 1)).toFixed(1) + 'px) scale(' + sc.toFixed(3) + ')';
     });
     // Work: one project at a time. The next card waits behind, the done card flies off.
-    const n = cards.length, h = W.innerHeight, w = W.innerWidth;
+    const n = cards.length, h = vh, w = W.innerWidth;
     const at = Math.min(n - 1, Math.max(0, progress(stack) * (n - 0.4) - 0.3));
     cards.forEach((c, i) => {
       const d = i - at;
@@ -116,11 +135,51 @@
     R.style.setProperty('--cv', (0.9 + 0.1 * t * t * (3 - 2 * t)).toFixed(4));
   };
 
+  // Section colours on home. One fixed backdrop holds the colour of whichever section has
+  // reached the middle of the screen and eases to the next; type follows through
+  // --ink, --ink2, --line and --hl. With reduced motion every section keeps its own colour.
+  const fx = R.querySelector('.bgfx'), BS = D.body.style;
+  // The work stack keeps its own charcoal: if it went transparent, a fast scroll would show
+  // the backdrop still fading from grey behind the cards.
+  const clear = [R.querySelector('.more'), R.querySelector('.how'), R.querySelector('.ft')];
+  const PAL = [['#D2D5D8', '#0E0F11', '#4A4E53', '#0E0F11'], ['#16181B', '#E6E8EA', '#9DA2A8', '#34373C'], ['var(--acc)', '#0E0F11', '#2B2E32', '#0E0F11'], ['#0E0F11', '#E6E8EA', '#9DA2A8', '#34373C']];
+  const zones = [[hero, 0], [stack, 1], [clear[0], 1], [R.querySelector('.focus'), 0], [clear[1], 2], [clear[2], 3]].filter(([el]) => el);
+  let zone = -1;
+  const tone = () => {
+    if (!fx) return;
+    if (!fade) {
+      if (zone !== -1) {
+        fx.style.display = '';
+        clear.forEach((el) => el.style.removeProperty('background'));
+        R.style.removeProperty('background-color');
+        ['--ink', '--ink2', '--line', '--hl'].forEach((k) => BS.removeProperty(k));
+        zone = -1;
+      }
+      return;
+    }
+    if (zone === -1) { fx.style.display = 'block'; clear.forEach((el) => { el.style.background = 'transparent'; }); }
+    const S = D.scrollingElement, line = W.innerHeight * 0.5;
+    let k = 0;
+    zones.forEach(([el, c]) => { if (el.getBoundingClientRect().top <= line) k = c; });
+    if (S.scrollTop + S.clientHeight >= S.scrollHeight - 2) k = 3;
+    if (k === zone) return;
+    zone = k;
+    fx.style.backgroundColor = PAL[k][0];
+    // The page itself takes the colour too: on iPhones the fixed backdrop does not reach
+    // under Safari's toolbar, so without this the grey page would show there.
+    R.style.backgroundColor = PAL[k][0];
+    BS.setProperty('--ink', PAL[k][1]);
+    BS.setProperty('--ink2', PAL[k][2]);
+    BS.setProperty('--line', PAL[k][3]);
+    if (k === 2) BS.setProperty('--hl', '#0E0F11'); else BS.removeProperty('--hl');
+  };
+
   const update = hero && stack ? home : page;
   setMode();
   update();
-  W.addEventListener('resize', () => { setMode(); update(); });
-  W.addEventListener('scroll', update, { passive: true });
+  tone();
+  W.addEventListener('resize', () => { setMode(); update(); tone(); });
+  W.addEventListener('scroll', () => { update(); tone(); }, { passive: true });
 
   // Smooth wheel scrolling in scroll-driven mode. Touch, keyboard and scrollbar stay native.
   {

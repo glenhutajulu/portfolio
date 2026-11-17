@@ -1,0 +1,23 @@
+/* Additions that are not on the canvas: the scroll-driven home and case-study effects
+   also run on phones, and the page colour follows the section colours so nothing light
+   shows behind the iOS Safari toolbar. global.css stays a straight copy of the canvas. */
+
+#top{transition:background-color .9s cubic-bezier(.65,0,.35,1)}
+@media (prefers-reduced-motion:reduce){#top{transition:none}}
+
+@media (max-width:759px){
+  /* hero: one screen, the name centred, copy and chips along the bottom */
+  .pin .h2-stick{grid-template-rows:minmax(0,1fr) auto auto;row-gap:28px;padding-top:64px;padding-bottom:24px}
+  .pin .h2-mid{align-self:center}
+  .pin .dot{display:block}
+  .pin .dot:nth-of-type(n+5){display:none}
+
+  /* work stack: head, then the card, then its short story underneath */
+  .pin .stk-stick{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr);grid-template-areas:"head" "stage" "story";gap:20px;padding:64px 16px 20px}
+  .pin .wk-card{align-self:start;width:min(100%,calc((var(--vh,700px) - 400px) * 4 / 3))}
+  .pin .wk-story{align-self:start;gap:12px}
+  .pin .wk-story h3{font-size:clamp(48px,14vw,64px)}
+  .pin .wk-story dl div:not(:first-child){display:none}
+  .pin .wk-story dl div{padding-top:10px}
+  .pin .wk-story dd{font-size:15px}
+}
