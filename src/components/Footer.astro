@@ -4,7 +4,7 @@ import { site } from '../data';
 const [user, domain] = site.email.split('@');
 ---
 <footer class="ft" aria-label="Contact">
-<p class="mono" style="margin: 0; color: #9DA2A8"><span class="sq" style="color: var(--acc)"></span>Let's work together</p>
+<p class="mono" style="margin: 0; color: var(--ink2, #9DA2A8)"><span class="sq" style="color: var(--hl, var(--acc))"></span>Let's work together</p>
 <a class="ft-mail px-font" href={`mailto:${site.email}`}>{user}<br />@{domain}</a>
 <div class="ft-row mono">
 <div class="ft-links"><a href={site.linkedin}>LinkedIn ↗</a><a href={site.dribbble}>Dribbble ↗</a>{site.cv && <a href={site.cv} target="_blank" rel="noopener">CV ↗</a>}</div>

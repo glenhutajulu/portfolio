@@ -43,10 +43,13 @@
   const stack = R.querySelector('.stk'), counter = R.querySelector('.stk-n');
   const cards = all('.wk-card'), stories = all('.wk-story');
   const cover = R.querySelector('.cs-cover-in');
-  let pin = false;
+  let pin = false, fade = false;
   const setMode = () => {
     pin = !reduce && W.innerWidth >= 760 && W.innerHeight <= 1400;
     R.classList.toggle('pin', pin);
+    // Home only: one section per screen and section colours, on any width.
+    fade = !!hero && !reduce && W.innerHeight <= 1400;
+    R.classList.toggle('fold', fade);
     R.style.setProperty('--vh', W.innerHeight + 'px');
   };
   const progress = (el) => {
@@ -116,11 +119,45 @@
     R.style.setProperty('--cv', (0.9 + 0.1 * t * t * (3 - 2 * t)).toFixed(4));
   };
 
+  // Section colours on home. One fixed backdrop holds the colour of whichever section has
+  // reached the middle of the screen and eases to the next; type follows through
+  // --ink, --ink2, --line and --hl. With reduced motion every section keeps its own colour.
+  const fx = R.querySelector('.bgfx'), BS = D.body.style;
+  const clear = [R.querySelector('.more'), R.querySelector('.how'), R.querySelector('.ft'), stack];
+  const PAL = [['#D2D5D8', '#0E0F11', '#4A4E53', '#0E0F11'], ['#16181B', '#E6E8EA', '#9DA2A8', '#34373C'], ['var(--acc)', '#0E0F11', '#2B2E32', '#0E0F11'], ['#0E0F11', '#E6E8EA', '#9DA2A8', '#34373C']];
+  const zones = [[hero, 0], [stack, 1], [clear[0], 1], [R.querySelector('.focus'), 0], [clear[1], 2], [clear[2], 3]];
+  let zone = -1;
+  const tone = () => {
+    if (!fx) return;
+    if (!fade) {
+      if (zone !== -1) {
+        fx.style.display = '';
+        clear.forEach((el) => el.style.removeProperty('background'));
+        ['--ink', '--ink2', '--line', '--hl'].forEach((k) => BS.removeProperty(k));
+        zone = -1;
+      }
+      return;
+    }
+    if (zone === -1) { fx.style.display = 'block'; clear.forEach((el) => { el.style.background = 'transparent'; }); }
+    const S = D.scrollingElement, line = W.innerHeight * 0.5;
+    let k = 0;
+    zones.forEach(([el, c]) => { if (el.getBoundingClientRect().top <= line) k = c; });
+    if (S.scrollTop + S.clientHeight >= S.scrollHeight - 2) k = 3;
+    if (k === zone) return;
+    zone = k;
+    fx.style.backgroundColor = PAL[k][0];
+    BS.setProperty('--ink', PAL[k][1]);
+    BS.setProperty('--ink2', PAL[k][2]);
+    BS.setProperty('--line', PAL[k][3]);
+    if (k === 2) BS.setProperty('--hl', '#0E0F11'); else BS.removeProperty('--hl');
+  };
+
   const update = hero && stack ? home : page;
   setMode();
   update();
-  W.addEventListener('resize', () => { setMode(); update(); });
-  W.addEventListener('scroll', update, { passive: true });
+  tone();
+  W.addEventListener('resize', () => { setMode(); update(); tone(); });
+  W.addEventListener('scroll', () => { update(); tone(); }, { passive: true });
 
   // Smooth wheel scrolling in scroll-driven mode. Touch, keyboard and scrollbar stay native.
   {
