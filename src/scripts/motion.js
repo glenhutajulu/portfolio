@@ -123,9 +123,11 @@
   // reached the middle of the screen and eases to the next; type follows through
   // --ink, --ink2, --line and --hl. With reduced motion every section keeps its own colour.
   const fx = R.querySelector('.bgfx'), BS = D.body.style;
-  const clear = [R.querySelector('.more'), R.querySelector('.how'), R.querySelector('.ft'), stack];
+  // The work stack keeps its own charcoal: if it went transparent, a fast scroll would show
+  // the backdrop still fading from grey behind the cards.
+  const clear = [R.querySelector('.more'), R.querySelector('.how'), R.querySelector('.ft')];
   const PAL = [['#D2D5D8', '#0E0F11', '#4A4E53', '#0E0F11'], ['#16181B', '#E6E8EA', '#9DA2A8', '#34373C'], ['var(--acc)', '#0E0F11', '#2B2E32', '#0E0F11'], ['#0E0F11', '#E6E8EA', '#9DA2A8', '#34373C']];
-  const zones = [[hero, 0], [stack, 1], [clear[0], 1], [R.querySelector('.focus'), 0], [clear[1], 2], [clear[2], 3]];
+  const zones = [[hero, 0], [stack, 1], [clear[0], 1], [R.querySelector('.focus'), 0], [clear[1], 2], [clear[2], 3]].filter(([el]) => el);
   let zone = -1;
   const tone = () => {
     if (!fx) return;
