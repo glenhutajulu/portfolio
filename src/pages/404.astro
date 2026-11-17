@@ -2,10 +2,12 @@
 import Base from '../layouts/Base.astro';
 ---
 <Base title="Page not found, Glen Hutajulu" description="This page does not exist.">
-  <div class="wrap">
-    <section class="page-head">
-      <h1 class="h-giant">not found</h1>
-      <p class="lede lede-wide mt-28">This page does not exist. Head back to <a href="/#work">the work</a>.</p>
-    </section>
-  </div>
+<section class="cs-hero" aria-label="Page not found">
+<p class="cs-kick mono"><span class="sq" style="color: var(--acc)"></span>Error 404</p>
+<h1 class="cs-name px-font" style="font-size: clamp(72px, 15vw, 240px)">not found</h1>
+<div class="cs-sub">
+<p class="lede">This page does not exist.</p>
+<a class="pill mono" href="/#work">Back to the work ↗</a>
+</div>
+</section>
 </Base>
